@@ -20,7 +20,7 @@ app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok' });
 });
 
-app.get('/', (_req: Request, res: Response) => {
+app.get('/api', (_req: Request, res: Response) => {
   res.json({ message: 'sneaker-drops-api up and running' });
 });
 
