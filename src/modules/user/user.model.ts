@@ -1,7 +1,7 @@
 import { Model, DataTypes, Sequelize, Optional } from "sequelize";
 
 export interface UserAttributes {
-  id?: string;
+  id?: number;
   uuid?: string;
   username: string;
   createdAt?: Date;
@@ -15,7 +15,7 @@ export class User
   extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes
 {
-  public id!: string;
+  public id!: number;
   public uuid!: string;
   public username!: string;
 
@@ -34,7 +34,8 @@ export const initUser = (sequelize: Sequelize) => {
       uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
+        allowNull: false,
+        unique: true,
       },
       username: {
         type: DataTypes.STRING,
