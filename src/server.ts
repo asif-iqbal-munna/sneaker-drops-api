@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import 'dotenv/config';
-import { sequelize } from './lib/db';
+import { sequelize } from './core/db';
 import { sendError, sendSuccess } from './lib/apiResponse';
 import compression from 'compression';
 import rateLimit from "express-rate-limit";
@@ -11,6 +11,7 @@ import "./modules/drops/drop.worker"
 import { errorHandler } from './middleware/errorHandler';
 import { dropsQueue } from './modules/drops/drops.queue';
 import { initSocket } from './lib/socket';
+import 'pg'; 
 
 const PORT = process.env.PORT ?? 4000;
 
