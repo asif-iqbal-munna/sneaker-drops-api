@@ -1,12 +1,13 @@
 import { Drop } from "./drops.model";
 import { DropCreationDto } from "./drops.interface";
 import { scheduleDrop } from "./drop.schedules";
-import { sequelize } from "../../lib/db";
+import { sequelize } from "../../core/db";
 import { emitDropEvent } from "../../lib/socket";
 
 export const findDrops = async () => {
   try {
   const drops = await Drop.findAll({
+    where: { status: "live" },
     order: [['createdAt', 'DESC']],
   });
 

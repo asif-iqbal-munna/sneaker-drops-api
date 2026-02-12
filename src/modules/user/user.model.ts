@@ -7,6 +7,7 @@ export class User
   public id!: number;
   public uuid!: string;
   public username!: string;
+  public name!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;

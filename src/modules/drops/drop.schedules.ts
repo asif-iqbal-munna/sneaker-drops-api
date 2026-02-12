@@ -1,12 +1,12 @@
 import dayjs from "dayjs";
-import { dropsQueue } from "./drops.queue";
+import { eventQueues } from "../../queue/eventQueue";
 
 export const scheduleDrop = async (scheduledAt: Date, dropId: string | number) => {
   try {
     const delay = dayjs(scheduledAt).diff(dayjs());
 console.log({delay,scheduledAt})
     if (delay > 0) {
-      await dropsQueue.add(
+      await eventQueues.add(
         "publish-drops",
         {
           dropId,
@@ -21,7 +21,7 @@ console.log({delay,scheduledAt})
         }
       );
 
-      console.log("added to the que")
+      console.log("added drop to the que")
     }
   } catch (error) {
     console.log({error})

@@ -7,10 +7,10 @@ import compression from 'compression';
 import rateLimit from "express-rate-limit";
 import { initModels } from './lib/initModels';
 import routes from './routes';
-import "./modules/drops/drop.worker"
 import { errorHandler } from './middleware/errorHandler';
-import { dropsQueue } from './modules/drops/drops.queue';
 import { initSocket } from './lib/socket';
+import { eventQueues } from './queue/eventQueue';
+import './queue/eventWorkers';
 
 const PORT = process.env.PORT ?? 4000;
 
@@ -52,13 +52,13 @@ async function start() {
 
     initSocket(server);
     
-    const delayed = await dropsQueue.getJobs([
+    const delayed = await eventQueues.getJobs([
       "delayed",
     ]);
-    const waiting = await dropsQueue.getJobs([
+    const waiting = await eventQueues.getJobs([
       "waiting",
     ]);
-    const active = await dropsQueue.getJobs([
+    const active = await eventQueues.getJobs([
       "active",
     ]);
     

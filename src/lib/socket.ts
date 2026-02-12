@@ -30,5 +30,6 @@ type DropEvent =
 
 
 export const emitDropEvent = (event: DropEvent) => {
+  console.log(event)
   io.emit("drop:event", event);
 };
