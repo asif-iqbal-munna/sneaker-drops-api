@@ -1,6 +1,5 @@
 import { Model } from "sequelize";
 import { IDrops, DropCreationDto } from "./drops.interface";
-
 export class Drop
   extends Model<IDrops, DropCreationDto>
   implements IDrops
@@ -16,6 +15,13 @@ export class Drop
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  static associate(models: any) {
+    Drop.hasMany(models.Purchase, {
+      foreignKey: "drop_id",
+      as: "Purchases",
+    });
+  }
 }
 
 

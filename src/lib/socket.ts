@@ -21,7 +21,7 @@ type DropEvent =
     }
   | {
       type: "stock";
-      payload: { dropId: number; available: number };
+      payload: { dropId: number; userId: number, available: number };
     }
   | {
       type: "purchase";

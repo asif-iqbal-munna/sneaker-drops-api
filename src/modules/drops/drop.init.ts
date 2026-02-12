@@ -1,5 +1,6 @@
+import { Purchase } from "../purchase/purchase.model";
 import { Drop } from "./drops.model";
-import { DataTypes, Sequelize } from "sequelize";
+import { DataTypes, Model, Sequelize } from "sequelize";
 
 export const initDrop = (sequelize: Sequelize) => {
   Drop.init(

@@ -3,12 +3,26 @@ import { DropCreationDto } from "./drops.interface";
 import { scheduleDrop } from "./drop.schedules";
 import { sequelize } from "../../core/db";
 import { emitDropEvent } from "../../lib/socket";
+import { Purchase } from "../purchase/purchase.model";
+import { User } from "../user/user.model";
 
 export const findDrops = async () => {
   try {
   const drops = await Drop.findAll({
     where: { status: "live" },
     order: [['createdAt', 'DESC']],
+    include: [
+      {
+        model: Purchase,
+        as: "Purchases",
+        include: [
+          {
+            model: User,
+            as: "User"
+          }
+        ] 
+      }
+    ]
   });
 
   if (!drops) {

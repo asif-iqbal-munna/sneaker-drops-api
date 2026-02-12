@@ -12,4 +12,4 @@ export interface IReservation {
 }
 
 export interface ReservationCreationDto
-  extends Optional<IReservation, "id" | "uuid"> {}
+  extends Optional<IReservation, "id" | "uuid" | "status"> {}

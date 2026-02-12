@@ -4,7 +4,6 @@ import { Drop } from "../drops/drops.model";
 import { Reservation } from "./reservation.model"
 import { scheduleReservation } from "./reservation.schedule";
 
-
 export const createReservation = async (user_id: number, drop_id: number) => {
   const transaction = await sequelize.transaction()
   try {
@@ -33,12 +32,23 @@ export const createReservation = async (user_id: number, drop_id: number) => {
 
     await scheduleReservation(drop_id, reservation.id)
 
-    emitDropEvent({type: "stock", payload: {dropId: drop_id, available: drop.available_stock}})
+    emitDropEvent({type: "stock", payload: {dropId: drop_id, userId: user_id, available: drop.available_stock}})
 
     await transaction.commit();
+    return reservation
   } catch (error) {
     await transaction.rollback()
     console.error("reservation failed", error);
     throw new Error("reservation failed");
+  }
+}
+
+
+export const findReservations = (user_id: number) => {
+  try {
+    return Reservation.findAll({ where: { status: "active", user_id }, attributes: ['id', 'user_id', 'drop_id'] })
+  } catch (error) {
+    console.error("getting reservation failed", error);
+    throw new Error("Failed to fetch reservations");
   }
 }
