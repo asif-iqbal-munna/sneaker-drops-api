@@ -10,6 +10,7 @@ import routes from './routes';
 import "./modules/drops/drop.worker"
 import { errorHandler } from './middleware/errorHandler';
 import { dropsQueue } from './modules/drops/drops.queue';
+import { initSocket } from './lib/socket';
 
 const PORT = process.env.PORT ?? 4000;
 
@@ -48,6 +49,9 @@ async function start() {
     const server = app.listen(PORT, () => {
       console.log(`Server listening on http://localhost:${PORT}`);
     });
+
+    initSocket(server);
+    
     const delayed = await dropsQueue.getJobs([
       "delayed",
     ]);

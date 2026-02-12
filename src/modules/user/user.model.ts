@@ -1,19 +1,8 @@
-import { Model, DataTypes, Sequelize, Optional } from "sequelize";
-
-export interface UserAttributes {
-  id?: number;
-  uuid?: string;
-  username: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-interface UserCreationAttributes
-  extends Optional<UserAttributes, "id" | "uuid"> {}
-
+import { Model } from "sequelize";
+import { CreateUserDTO, IUser } from "./user.interface";
 export class User
-  extends Model<UserAttributes, UserCreationAttributes>
-  implements UserAttributes
+  extends Model<IUser, CreateUserDTO>
+  implements IUser
 {
   public id!: number;
   public uuid!: string;
@@ -23,32 +12,3 @@ export class User
   public readonly updatedAt!: Date;
 }
 
-export const initUser = (sequelize: Sequelize) => {
-  User.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      uuid: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        unique: true,
-      },
-      username: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-      },
-    },
-    {
-      sequelize,
-      tableName: "users",
-      timestamps: true,
-    }
-  );
-
-  return User;
-};

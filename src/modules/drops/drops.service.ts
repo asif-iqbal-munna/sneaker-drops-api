@@ -2,6 +2,7 @@ import { Drop } from "./drops.model";
 import { DropCreationDto } from "./drops.interface";
 import { scheduleDrop } from "./drop.schedules";
 import { sequelize } from "../../lib/db";
+import { emitDropEvent } from "../../lib/socket";
 
 export const findDrops = async () => {
   try {
@@ -42,6 +43,10 @@ export const createDrop = async (input: DropCreationDto) => {
 
     if(payload.status === "scheduled" && drops_date){
       await scheduleDrop(drops_date, newDrop.id)
+    }
+
+    if(payload.status === "live") {
+      emitDropEvent({type: "drop", payload: newDrop})
     }
 
     await transaction.commit();

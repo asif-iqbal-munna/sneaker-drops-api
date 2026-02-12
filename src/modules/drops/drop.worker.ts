@@ -1,6 +1,7 @@
 import { Worker } from "bullmq";
 import { Drop } from "./drops.model";
 import { redis } from "../../lib/redis";
+import { emitDropEvent } from "../../lib/socket";
 
 export const dropWorker = new Worker(
   "drops-publisher",
@@ -18,6 +19,8 @@ export const dropWorker = new Worker(
     await drop.update({
       status: "live",
     });
+
+    emitDropEvent({ type: "drop", payload: drop })
 
     console.log(`success`);
   },
