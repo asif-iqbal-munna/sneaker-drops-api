@@ -11,7 +11,6 @@ import "./modules/drops/drop.worker"
 import { errorHandler } from './middleware/errorHandler';
 import { dropsQueue } from './modules/drops/drops.queue';
 import { initSocket } from './lib/socket';
-import 'pg'; 
 
 const PORT = process.env.PORT ?? 4000;
 
