@@ -10,9 +10,7 @@
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:down": "npx sequelize-cli db:migrate:undo",
     "seed:up": "npx sequelize-cli db:seed:all",
-    "seed:down": "npx sequelize-cli db:seed:undo:all",
-    "migration:create": "npx sequelize-cli migration:generate --name",
-    "worker": "ts-node-dev --respawn --transpile-only src/queue/eventWorkers.ts"
+    "migration:create": "npx sequelize-cli migration:generate --name"
   },
   "keywords": [],
   "author": "",
