@@ -6,13 +6,15 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "migrate:up": "npx sequelize-cli db:migrate",
+    "migrate:down": "npx sequelize-cli db:migrate:undo",
+    "seed:up": "npx sequelize-cli db:seed:all",
+    "seed:down": "npx sequelize-cli db:seed:undo:all",
+    "migration:create": "npx sequelize-cli migration:generate --name"
   },
   "keywords": [],
   "author": "",
-  "engines": {
-    "node": "20.x"
-  },
   "license": "ISC",
   "dependencies": {
     "bullmq": "^5.67.3",
